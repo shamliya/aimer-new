@@ -1,38 +1,386 @@
-.App {
+/* App.css */
+
+/* Base Styles */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Mobile Frame for Desktop View */
+  .mobile-frame {
+    display: flex; /* Show by default on larger screens */
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Subtle shadow for mobile frame */
+    max-width: 300px; /* Example mobile width */
+    max-height: 90vh;
+    margin: 10px auto; /* Center horizontally and add vertical spacing */
+    border: 8px solid #333;
+  }
+
+/* Base Styles within Mobile Frame */
+.mobile-frame .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px; /* Reset padding for mobile frame */
+}
+
+.mobile-frame .header,
+.mobile-frame .content {
+  width: 100%;
+}
+
+/* Container for Mobile View (shown when mobile-frame is hidden) */
+.container {
+  display: none; /* Hidden by default */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background-color: #fff;
+  max-height: 100vh;
+  overflow-y: scroll; /* Enable scrolling */
+  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
+  scrollbar-width: none; /* Hide scrollbar on Firefox */
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar on Chrome, Safari, and Edge */
+}
+/* Override padding for the banner */
+.container .banner-with-image {
+  margin: -16px -16px 0 -16px; /* Negative margins to offset the container padding */
+  width: calc(100% + 20px); /* Compensate for the negative margins */
+  border-radius: 0 0 20px 20px; /* Ensure no rounding at the top corners if not desired */
+  margin-top:10px;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+}
+
+.logo {
+  max-width: 100px;
+}
+
+.content {
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.banner {
+  width: 100%;
+  border-radius: 20px;
+}
+.banner-with-image {
+  border-radius:0 0 10px 10px;
+  width: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: #333;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.sponsor {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 8px 0;
+}
+
+.selfie-section {
+  margin: 5px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.selfie-section p {
+  font-size: 24px;
+  font-weight: 300;
+  width: 90%;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.selfie-section span {
+  font-size: 12px;
+  font-weight: 400;
+  width: 70%;
+  margin: 4px 0;
+}
+
+.selfie-image {
+  max-width: 200px;
+  margin-bottom: 8px;
+}
+
+.description {
+  font-size: 1rem;
+  color: #4D5364;
+}
+
+.snap-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #6663FD;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 15px 25px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 15px auto;
+}
+
+.button-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+}
+.banner-container {
+  position: relative;
+}
+
+.uploaded-image {
+  position: absolute;
+  bottom: -30px; /* Adjust this value to move the image closer to the banner */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff; /* White background beyond the border */
+  padding: 5px; /* Space beyond the border */
+  border-radius: 50%; /* Ensure the container is circular */
+}
+
+
+.circle-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #6663FD;
+  padding: 3px;
+  background-color: #fff;
+}
+.rectangle-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  margin-top: 40px; /* Adjust margin as needed */
+  padding: 15px;
+  border-radius:40px; /* Rounded edges */
+  background: linear-gradient(to right, #EBF1FF, white);
+  border: 2px solid #EBF1FF;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px; /* Adjust width as needed */
+  margin-left: auto;
+  margin-right: auto;
+  width:80%;
+}
+
+.rectangle-content {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.icon {
+  width: 30px; /* Adjust size as needed */
+  height: 30px;
+  margin-right: 10px;
+}
+
+.text {
+  flex: 1;
+  font-size: 12px;
+  color: #4D5364; /* Adjust color as needed */
+  margin-right: 20px;
+}
+
+.column-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number {
+  font-size: 18px;
+  font-weight: bold;
+  color:#375DFB;
+}
+
+.photos-text {
+  font-size: 14px;
+  color: #666; /* Adjust color as needed */
+}
+.photos-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px; /* Adjust margin as needed */
+  padding: 10px 15px;
+}
+
+.photos-text {
+  font-size: 16px; /* Adjust font size as needed */
+  color: #373743; /* Text color */
+}
+
+.check-button {
+  background-color: #375DFB;
   color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 12px; /* Adjust font size as needed */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.check-button:hover {
+  background-color: #2a4dbf; /* Darker shade on hover */
+}
+.photos-gallery {  
+  display: grid;  
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  
+  padding: 10px;  
+  gap:5px;
+}  
+
+.matched-photo {  
+  width: 100%;  
+  height: 150px; /* Set a fixed height */  
+  border-radius: 8px;  
+  object-fit: cover; /* Ensures images cover the area */  
+}
+/* Centered logo */
+.initial-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-@keyframes App-logo-spin {
+.logo-centered {
+  width: 150px; /* Adjust size as needed */
+}
+/* Add this to your App.css or similar file */
+
+@keyframes slideIn {
   from {
-    transform: rotate(0deg);
+    transform: translateX(100%);
+    opacity: 0;
   }
   to {
-    transform: rotate(360deg);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.5s ease-out;
+  animation-fill-mode: forwards; /* Ensures the element stays in its final position */
+  opacity: 0; /* Initially hidden */
+}
+
+
+/* Mobile Styles */
+@media only screen and (max-width: 600px) {
+  /* Hide mobile frame */
+  .mobile-frame {
+    display: none;
+  }
+
+  /* Show container on mobile */
+  .container {
+    display: flex;
+  }
+
+  .logo {
+    max-width: 100px;
+  }
+
+  .banner {
+    border-radius: 20px;
+  }
+  .banner-with-image {
+    border-radius:0 0 20px 20px;
+  }
+  .selfie-section p {
+    font-size: 24px;
+    width: 90%;
+    font-weight: 400;
+  }
+
+  .selfie-section span {
+    font-size: 12px;
+    width: 75%;
+  }
+
+  .selfie-image {
+    max-width: 150px;
+  }
+
+  .snap-button {
+    width: 90%; /* Full width on mobile */
+    padding: 15px 25px;
+    font-size: 16px;
+    margin-top: 20px;
+  }
+
+  .button-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Web/Desktop Styles */
+@media only screen and (min-width: 601px) {
+  /* Mobile frame already displayed by default */
+  .hide-in-web {
+    display:none;
+  }
+  .logo {
+    max-width: 80px;
+  }
+
+  .banner {
+    margin-bottom: 0;
+    width:100%;
+  }
+
+  .selfie-section p {
+    font-size: 16px;
+    width: 80%;
+  }
+
+  .selfie-section span {
+    font-size: 10px;
+    width: 70%;
+  }
+
+  .selfie-image {
+    max-width: 150px;
+  }
+
+  .snap-button {
+    width: 95%;
+    padding: 15px 25px;
+    font-size: 12px;
+  }
+
+  .button-icon {
+    width: 16px;
+    height: 16px;
   }
 }
