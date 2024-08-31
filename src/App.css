@@ -292,7 +292,14 @@ h1 {
   animation-fill-mode: forwards; /* Ensures the element stays in its final position */
   opacity: 0; /* Initially hidden */
 }
+.image-modal-overlay {
+  z-index: 1000;
+}
 
+/* Optional: Prevent body scroll when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
 
 /* Mobile Styles */
 @media only screen and (max-width: 600px) {

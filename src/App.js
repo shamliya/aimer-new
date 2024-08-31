@@ -8,6 +8,7 @@ import Modal from "./modal/modal";
 import axios from "axios";
 import icon from "./images/sparkling-2-fill.png";
 import NoData from "./noData/noData";
+import ImageModal from "./imageModal/imageModal";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -20,14 +21,26 @@ function App() {
   const [matchCount, setMatchCount] = useState(0);
   const [isContentLoaded, setIsContentLoaded] = useState(false);
   const [slideIn, setSlideIn] = useState(false);
+  // New states for Image Modal
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsContentLoaded(true);
       setSlideIn(true); 
-    }, 2000); // Adjust delay time as needed
+    }, 1000); // Adjust delay time as needed
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (isImageModalOpen) {
+      document.body.classList.add("modal-open");
+    } else {
+      document.body.classList.remove("modal-open");
+    }
+  }, [isImageModalOpen]);
+  
 
   const fileInputRef = useRef(null);
 
@@ -80,6 +93,30 @@ function App() {
       }
     }
   };
+
+    // Handler to open Image Modal
+    const openImageModal = (index) => {
+      setCurrentImageIndex(index);
+      setIsImageModalOpen(true);
+    };
+  
+    // Handler to close Image Modal
+    const closeImageModal = () => {
+      setIsImageModalOpen(false);
+    };
+  
+    // Handlers for navigating images
+    const showPrevImage = () => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? faceMatches.length - 1 : prevIndex - 1
+      );
+    };
+  
+    const showNextImage = () => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === faceMatches.length - 1 ? 0 : prevIndex + 1
+      );
+    };
 
   return (
     <>
@@ -138,6 +175,8 @@ function App() {
                         src={match.ImageUrl} 
                         alt={`Matched Face ${index + 1}`}
                         className="matched-photo"
+                        onClick={() => openImageModal(index)} // Add onClick handler
+                            style={{ cursor: "pointer" }}
                       />
                     ))}
                   </div>
@@ -234,6 +273,8 @@ function App() {
                       src={match.ImageUrl} 
                       alt={`Matched Face ${index + 1}`}
                       className="matched-photo"
+                      onClick={() => openImageModal(index)} // Add onClick handler
+                            style={{ cursor: "pointer" }}
                     />
                   ))}
                 </div>
@@ -276,6 +317,16 @@ function App() {
       )}
       </div>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} />
+          {/* New Image Modal */}
+          {isImageModalOpen && (
+       <ImageModal
+       imageUrl={faceMatches[currentImageIndex].ImageUrl}
+       onClose={closeImageModal}
+       onPrev={showPrevImage}
+       onNext={showNextImage}
+     />
+     
+      )}
     </>
   );
 }
