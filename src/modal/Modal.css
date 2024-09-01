@@ -35,11 +35,11 @@
     font-size: 14px;
     color: #666;
   }
-  
   .modal-gif {
-    width: 120px;
-    height: 120px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
   }
   
   .modal-scanning {

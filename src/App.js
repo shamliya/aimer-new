@@ -24,6 +24,8 @@ function App() {
   // New states for Image Modal
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isBannerLoaded, setIsBannerLoaded] = useState(false);
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,11 +55,15 @@ function App() {
       handleFileUpload(uploadedFile);
     }
   };
-  console.log("uploaded file", uploadedFile);
+
   const handleFileUpload = async (file) => {
     if (file) {
       setUploadedFile(file); // Set the file in state
       setShowModal(true); // Show the modal
+
+      const timer = setTimeout(() => {
+        setShowModal(false);
+      }, 8000);
       const imageUrl = URL.createObjectURL(file); // Create a URL for the image
       setImageUrl(imageUrl);
 
@@ -134,10 +140,14 @@ function App() {
           </header>
           <div className="content">
             <div className="banner-container">
+            {!isBannerLoaded && (
+                    <div className="banner-placeholder"></div> // Placeholder div
+                  )}
               <img
                 src={banner}
                 alt="Event Banner"
-                className={`${imageUrl ? "banner-with-image" : "banner"}`}
+                className={`${success ? "banner-with-image" : "banner"}`}
+                onLoad={() => setIsBannerLoaded(true)}
               />
               {success && (
                 <div className="uploaded-image">
@@ -232,11 +242,16 @@ function App() {
         </header>
         <div className="content">
           <div className="banner-container">
+             {!isBannerLoaded && (
+                    <div className="banner-placeholder"></div> // Placeholder div
+                  )}
+                  {isBannerLoaded && (
             <img
               src={banner}
               alt="Event Banner"
               className={`${success ? "banner-with-image" : "banner"}`}
-            />
+              onLoad={() => setIsBannerLoaded(true)}
+            />)}
             {success && (
               <div className="uploaded-image">
                 <img src={imageUrl} alt="Uploaded" className="circle-image" />
