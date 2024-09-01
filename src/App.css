@@ -123,6 +123,19 @@ h1 {
   max-width: 200px;
   margin-bottom: 8px;
 }
+.selfie-placeholder {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Adjust the width as needed */
+  height: 150px; /* Adjust the height as needed */
+  background-color: #fff; /* Light grey or any color to match your design */
+  margin: 0 auto; /* Center the placeholder */
+}
+
+.selfie-image.hidden {
+  display: none; /* Hide the image until it's fully loaded */
+}
 
 .description {
   font-size: 1rem;
@@ -154,7 +167,7 @@ h1 {
 
 .banner-placeholder {
   width: 100%;
-  height: 200px; /* Adjust based on your banner's actual height */
+  height: 150px; /* Adjust based on your banner's actual height */
   background-color: #f0f0f0; /* Light grey placeholder */
   border-radius: 20px;
 }

@@ -9,6 +9,7 @@ import axios from "axios";
 import icon from "./images/sparkling-2-fill.png";
 import NoData from "./noData/noData";
 import ImageModal from "./imageModal/imageModal";
+import Loader from "./loader/loader";
 
 function App() {
   const [showModal, setShowModal] = useState(false);
@@ -25,6 +26,7 @@ function App() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isBannerLoaded, setIsBannerLoaded] = useState(false);
+  const [isSelfieLoaded, setIsSelfieLoaded] = useState(false);
 
 
   useEffect(() => {
@@ -142,7 +144,8 @@ function App() {
             <div className="banner-container">
             {!isBannerLoaded && (
                     <div className="banner-placeholder"></div> // Placeholder div
-                  )}
+                  )} 
+                 
               <img
                 src={banner}
                 alt="Event Banner"
@@ -199,7 +202,13 @@ function App() {
             {!success && (
               <>
                 <div className="selfie-section">
-                  <img src={selfie} alt="Selfie" className="selfie-image" />
+                {!isSelfieLoaded && (
+                    <div className="selfie-placeholder">
+                       <Loader />
+                    </div>
+                  )}
+                  <img src={selfie} alt="Selfie" className="selfie-image"  onLoad={() => setIsSelfieLoaded(true)} // Set selfie as loaded
+                    style={{ display: isSelfieLoaded ? "block" : "none" }} />
                   <p>You’re just one selfie away from your event photos.</p>
                   <span className="description">
                     EventHex AI will use your selfie to find and deliver your
@@ -245,13 +254,13 @@ function App() {
              {!isBannerLoaded && (
                     <div className="banner-placeholder"></div> // Placeholder div
                   )}
-                  {isBannerLoaded && (
+              
             <img
               src={banner}
               alt="Event Banner"
               className={`${success ? "banner-with-image" : "banner"}`}
               onLoad={() => setIsBannerLoaded(true)}
-            />)}
+            />
             {success && (
               <div className="uploaded-image">
                 <img src={imageUrl} alt="Uploaded" className="circle-image" />
@@ -302,7 +311,13 @@ function App() {
           {!success && (
             <>
               <div className="selfie-section">
-                <img src={selfie} alt="Selfie" className="selfie-image" />
+              {!isSelfieLoaded && (
+                    <div className="selfie-placeholder">
+                       <Loader />
+                    </div>
+                  )}
+                <img src={selfie} alt="Selfie" className="selfie-image"  onLoad={() => setIsSelfieLoaded(true)} // Set selfie as loaded
+                    style={{ display: isSelfieLoaded ? "block" : "none" }} />
                 <p>You’re just one selfie away from your event photos.</p>
                 <span className="description">
                   EventHex AI will use your selfie to find and deliver your
