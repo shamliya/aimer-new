@@ -231,6 +231,9 @@ function App() {
                   style={{ display: "none" }}
                   onChange={(e) => handleFileUpload(e.target.files[0])}
                 />
+                <span className="description">
+                Already registered with your face? 
+                  </span>
               </>
             )}
           </div>
@@ -340,6 +343,9 @@ function App() {
                 style={{ display: "none" }}
                 onChange={(e) => handleFileUpload(e.target.files[0])}
               />
+               <span className="description">
+                Already registered with your face? <span className="signin-text">Sign in</span>
+                  </span>
             </>
           )}
         </div>

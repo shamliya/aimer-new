@@ -138,22 +138,27 @@ h1 {
 }
 
 .description {
-  font-size: 1rem;
+  font-size: .9rem;
   color: #4D5364;
+}
+
+.description .signin-text {
+  /* Your styles for signin-text go here */
+  color: #4D81E7; /* Example style */
+  cursor: pointer; /* Example style */
 }
 
 .snap-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #6663FD;
+  background-color: #375DFB;
   color: white;
   border: none;
   border-radius: 10px;
   padding: 15px 25px;
-  font-size: 16px;
   cursor: pointer;
-  margin: 15px auto;
+  margin: 25px auto;
 }
 
 .button-icon {
