@@ -7,12 +7,13 @@ import cameraIcon from "./images/Layer_1 (1).png";
 import Modal from "./modal/modal";
 import axios from "axios";
 import icon from "./images/sparkling-2-fill.png";
-import NoData from "./noData/noData";
 import ImageModal from "./imageModal/imageModal";
 import Loader from "./loader/loader";
 import SignIn from "./signIn";
 import "@dotlottie/player-component";
 import WebcamComponent from "./webCam/webCam";
+import PhotosSection from "./photosSection/photosSection";
+// import { GetIcon } from "../../../../../icons";
 
 const SnapSelfie = () => {
   const [showModal, setShowModal] = useState(false);
@@ -33,7 +34,7 @@ const SnapSelfie = () => {
   const [signForm, setSignForm] = useState(false);
   const [snapClick, setSnapClick] = useState(false);
   const [showWebcam, setShowWebcam] = useState(false);
-  console.log("showWebcam", showWebcam);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsContentLoaded(true);
@@ -61,8 +62,29 @@ const SnapSelfie = () => {
     setShowWebcam(true);
   };
   const handleCapture = (imageSrc) => {
-    console.log(imageSrc); // Handle the captured image as needed
-    setShowWebcam(false); // Optionally close the webcam after capture
+    // console.log("image src in index", imageSrc); // Handle the captured image as needed
+    // setShowWebcam(false);
+  };
+
+  const handleContinue = (imageSrc) => {
+    console.log("Continue with image:", imageSrc);
+
+    // Convert base64 to a file object (optional)
+    const base64Data = imageSrc.split(",")[1]; // Extract base64 string without the prefix
+    const byteCharacters = atob(base64Data); // Decode the base64 string
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const imageFile = new Blob([byteArray], { type: "image/jpeg" });
+
+    // Now you can upload this file or process it further
+    console.log("Image file:", imageFile);
+    handleFileUpload(imageFile);
+
+    // Example: Handling the file upload
+    // handleFileUpload(imageFile);
   };
 
   const triggerFileUpload = () => {
@@ -100,6 +122,7 @@ const SnapSelfie = () => {
         const matches = matchResponse.data.FaceMatches;
         setFaceMatches(matches);
         setSuccess(true);
+
         if (matches && matches.length > 0) {
           setHasFaceMatches(true);
           setMatchCount(matches.length);
@@ -111,6 +134,8 @@ const SnapSelfie = () => {
       } finally {
         setUploaded(false);
         setShowModal(false);
+        setShowWebcam(false);
+        setSnapClick(false);
       }
     }
   };
@@ -184,14 +209,17 @@ const SnapSelfie = () => {
                       )}
                     </div>
                     {success && !signForm && (
-                      <>
+                    <>
+                      {hasFaceMatches && (
                         <div className="rectangle-container">
                           <div className="rectangle-content">
                             <img src={icon} alt="Icon" className="icon" />
                             <div className="text">
-                              {hasFaceMatches
-                                ? "Yay! AI found your photo matches"
-                                : "Our AI couldn’t find any photos of you"}
+                              {/* {hasFaceMatches
+                              ? "Yay! AI found your photo matches"
+                              : "Our AI couldn’t find any photos of you"
+                              } */}
+                              Yay! AI found your photo matches
                             </div>
                             <div className="column-items">
                               <div className="number">{matchCount}</div>
@@ -199,33 +227,32 @@ const SnapSelfie = () => {
                             </div>
                           </div>
                         </div>
-                        <div className="photos-section">
-                          <div className="photos-text">Your Photos</div>
-                          <button
-                            className="check-button"
-                            onClick={triggerFileUpload}
-                          >
-                            Check Again
-                          </button>
-                        </div>
-                        {matchCount > 0 ? (
-                          <div className="photos-gallery">
-                            {faceMatches.map((match, index) => (
-                              <img
-                                key={index}
-                                src={match.ImageUrl}
-                                alt={`Matched Face ${index + 1}`}
-                                className="matched-photo"
-                                onClick={() => openImageModal(index)} // Add onClick handler
-                                style={{ cursor: "pointer" }}
-                              />
-                            ))}
-                          </div>
-                        ) : (
-                          <NoData />
-                        )}
-                      </>
-                    )}
+                      )}
+                      {/* <div className="photos-section">
+                        <div className="photos-text">Your Photos</div>
+                        <button
+                          className="check-button"
+                          onClick={triggerFileUpload}
+                        >
+                          Check Again
+                        </button>
+                      </div> */}
+                      <PhotosSection
+                        faceMatches={faceMatches}
+                        matchCount={matchCount}
+                        openImageModal={openImageModal}
+                      />
+                      <button
+                        className={`check-button ${
+                          hasFaceMatches ? "float-button" : ""
+                        }`}
+                        onClick={triggerFileUpload}
+                      >
+                        {/* <GetIcon icon="reload" /> */}
+                        {!hasFaceMatches && <span>Check Again</span>}
+                      </button>
+                    </>
+                  )}
 
                     {!success && !signForm && (
                       <>
@@ -308,6 +335,7 @@ const SnapSelfie = () => {
                 <WebcamComponent
                   onCapture={handleCapture}
                   onClose={() => setShowWebcam(false)}
+                  onContinue={handleContinue}
                 />
               )}
             </div>
@@ -351,21 +379,25 @@ const SnapSelfie = () => {
                   </div>
                   {success && !signForm && (
                     <>
-                      <div className="rectangle-container">
-                        <div className="rectangle-content">
-                          <img src={icon} alt="Icon" className="icon" />
-                          <div className="text">
-                            {hasFaceMatches
+                      {hasFaceMatches && (
+                        <div className="rectangle-container">
+                          <div className="rectangle-content">
+                            <img src={icon} alt="Icon" className="icon" />
+                            <div className="text">
+                              {/* {hasFaceMatches
                               ? "Yay! AI found your photo matches"
-                              : "Our AI couldn’t find any photos of you"}
-                          </div>
-                          <div className="column-items">
-                            <div className="number">{matchCount}</div>
-                            <div className="photos-text">Photos</div>
+                              : "Our AI couldn’t find any photos of you"
+                              } */}
+                              Yay! AI found your photo matches
+                            </div>
+                            <div className="column-items">
+                              <div className="number">{matchCount}</div>
+                              <div className="photos-text">Photos</div>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="photos-section">
+                      )}
+                      {/* <div className="photos-section">
                         <div className="photos-text">Your Photos</div>
                         <button
                           className="check-button"
@@ -373,23 +405,21 @@ const SnapSelfie = () => {
                         >
                           Check Again
                         </button>
-                      </div>
-                      {matchCount > 0 ? (
-                        <div className="photos-gallery">
-                          {faceMatches.map((match, index) => (
-                            <img
-                              key={index}
-                              src={match.ImageUrl}
-                              alt={`Matched Face ${index + 1}`}
-                              className="matched-photo"
-                              onClick={() => openImageModal(index)} // Add onClick handler
-                              style={{ cursor: "pointer" }}
-                            />
-                          ))}
-                        </div>
-                      ) : (
-                        <NoData />
-                      )}
+                      </div> */}
+                      <PhotosSection
+                        faceMatches={faceMatches}
+                        matchCount={matchCount}
+                        openImageModal={openImageModal}
+                      />
+                      <button
+                        className={`check-button ${
+                          hasFaceMatches ? "float-button" : ""
+                        }`}
+                        onClick={triggerFileUpload}
+                      >
+                        {/* <GetIcon icon="reload" /> */}
+                        {!hasFaceMatches && <span>Check Again</span>}
+                      </button>
                     </>
                   )}
 
@@ -469,6 +499,7 @@ const SnapSelfie = () => {
               <WebcamComponent
                 onCapture={handleCapture}
                 onClose={() => setShowWebcam(false)}
+                onContinue={handleContinue}
               />
             )}
           </div>

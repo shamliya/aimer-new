@@ -146,6 +146,7 @@ h1 {
   /* Your styles for signin-text go here */
   color: #4D81E7; /* Example style */
   cursor: pointer; /* Example style */
+  margin-left:5px;
 }
 
 .snap-button {
@@ -264,16 +265,41 @@ h1 {
   background-color: #375DFB;
   color: white;
   border: none;
-  border-radius: 20px;
+  border-radius: 10px;
   padding: 10px 20px;
-  font-size: 12px; /* Adjust font size as needed */
+  font-size: 14px; /* Adjust font size as needed */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.check-button:hover {
-  background-color: #2a4dbf; /* Darker shade on hover */
+.check-button svg {
+  margin-right: 8px; /* Add space between icon and text */
+  font-size: 16px; /* Adjust icon size */
 }
+
+.check-button:hover {
+  background-color: #2e4acb; /* Darken background on hover */
+}
+
+/* Style for when hasFaceMatches is true (icon-only button) */
+.float-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px; /* Increased padding for icon-only button */
+  border-radius: 10px; /* Circle button for icon-only */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Change hover effect for floating button */
+.float-button:hover {
+  background-color: #2e4acb;
+}
+
 .photos-gallery {  
   display: grid;  
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));  
